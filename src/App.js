@@ -4,11 +4,8 @@ import Header from './components/Header/Header';
 import UserInput from './components/UserInput/UserInput';
 import ResultsTable from './components/ResultsTable/ResultsTable';
 
-// import logo from './assets/investment-calculator-logo.png';
-
 function App() {
 
-  // const [results, setResults] = useState(null);
   const [userInput, setUserInput] = useState(null);
 
   const calculateHandler = (userInput) => {
@@ -29,27 +26,22 @@ function App() {
       const yearlyInterest = currentSavings * expectedReturn;
       currentSavings += yearlyInterest + yearlyContribution;
       yearlyData.push({
-        // feel free to change the shape of the data pushed to the array!
         year: i + 1,
         yearlyInterest: yearlyInterest,
         savingsEndOfYear: currentSavings,
         yearlyContribution: yearlyContribution,
       });
 
-      // do something with yearlyData ...
-      // setResults(yearlyData)
     };
   }
 
   return (
     <div>
       <Header />
-
       <UserInput onCalculate={calculateHandler} />
+      {!userInput && <p style={{ textAlign: 'center' }}>No investment calculated yet.</p>}
+      {userInput && <ResultsTable data={yearlyData} intialInvestment={userInput['current-savings']} />}
 
-      {!userInput && <p style={{textAlign: 'center'}}>No investment calculated yet.</p>}
-      {userInput && <ResultsTable data={yearlyData} intialInvestment={userInput['current-savings']}/>}
-      
     </div>
   );
 }
